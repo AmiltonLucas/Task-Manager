@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useState } from "react";
+import { PropsWithChildren, createContext, useEffect, useState } from "react";
 import { API } from "../configs/api";
 
 type SignInTypes = {
@@ -6,17 +6,27 @@ type SignInTypes = {
   email: string;
 };
 
-type AuthContextTypes = {
-  signIn: (params: SignInTypes) => Promise<boolean | void>;
-  isLoading: boolean;
-  userAuth: { id?: string };
+type SignUpTypes = {
+  name: string;
+  password: string;
+  email: string;
 };
 
-export const AuthContext = createContext<AuthContextTypes>({} as AuthContextTypes);
+type AuthContextTypes = {
+  signIn: (params: SignInTypes) => Promise<boolean | void>;
+  signUp: (params: SignUpTypes) => Promise<boolean | void>;
+  isLoading: boolean;
+  userAuthID: string;
+  signOut: () => void;
+};
+
+export const AuthContext = createContext<AuthContextTypes>(
+  {} as AuthContextTypes
+);
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [isLoading, setIsLoading] = useState(false);
-  const [userAuth, setUserAuth] = useState({});
+  const [userAuthID, setUserAuthID] = useState("");
 
   async function signIn({ email, password }: SignInTypes) {
     if (!email || !password) throw alert("Por favor informar email e senha!");
@@ -29,10 +39,13 @@ export function AuthProvider({ children }: PropsWithChildren) {
     })
       .then((res) => {
         console.log(res);
-        
-        setUserAuth({ id: res.data.id });
 
-        localStorage.setItem("@task_manager:user", JSON.stringify({ id: res.data.id }));
+        setUserAuthID(res.data.id);
+
+        localStorage.setItem(
+          "@task_manager:userID",
+          JSON.stringify(res.data.id)
+        );
 
         return true;
       })
@@ -50,8 +63,51 @@ export function AuthProvider({ children }: PropsWithChildren) {
       });
   }
 
+  async function signUp({ name, email, password }: SignUpTypes) {
+    if (!name || !email || !password)
+      throw alert("Por favor informar nome, email e senha!");
+
+    setIsLoading(true);
+
+    return API.post("/user", {
+      name,
+      email,
+      password,
+    })
+      .then((res) => {
+        alert(res.data.message);
+        return true;
+      })
+      .catch((error) => {
+        if (error.response) {
+          alert(error.response.data.message);
+        } else {
+          alert("Erro ao criar usuário!");
+        }
+
+        console.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+
+  function signOut() {
+    localStorage.removeItem("@task_manager:userID");
+    setUserAuthID("");
+  }
+
+  useEffect(() => {
+    const userID = localStorage.getItem("@task_manager:userID");
+    console.log(userID);
+
+    if (userID) setUserAuthID(userID);
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ signIn, isLoading, userAuth }}>
+    <AuthContext.Provider
+      value={{ signIn, isLoading, userAuthID, signOut, signUp }}
+    >
       {children}
     </AuthContext.Provider>
   );

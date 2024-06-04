@@ -1,17 +1,21 @@
 import { Route, Routes } from "react-router-dom";
-import { SignIn } from "../pages/SignIn";
-import { SignUp } from "../pages/SignUp";
 import { App } from "../pages/App";
+import { Page404 } from "../pages/Page404";
+import { Home } from "../pages/Home";
+import { Tasks } from "../pages/Tasks";
+import { CreateTasks } from "../pages/CreateTasks";
+import { About } from "../pages/About";
 
 export function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/login" element={<SignIn />} />
-      <Route path="/tasks" element={<SignUp />} />
-      <Route path="/create-tasks" element={<SignUp />} />
-      <Route path="/about" element={<SignUp />} />
-      <Route path="*" element={<SignIn />} />
+      <Route path="/" element={<App />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/tasks" element={<Tasks />} />
+        <Route path="/create-task" element={<CreateTasks />} />
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<Page404 />} />
+      </Route>
     </Routes>
   );
 }

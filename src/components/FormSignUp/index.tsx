@@ -2,10 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { Container } from "./styles";
 import { Button } from "../Button";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useAuth } from "../../hooks/useAuth";
 
 export function FormSignUp() {
-  const navigate = useNavigate();
-
   type InputTypes = {
     name: string;
     email: string;
@@ -19,9 +18,15 @@ export function FormSignUp() {
     reset,
   } = useForm<InputTypes>();
 
-  const onSubmit: SubmitHandler<InputTypes> = (data) => {
-    console.log(data);
-    reset();
+  const { signUp } = useAuth();
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<InputTypes> = async (data) => {
+    const userCreated = await signUp(data);
+    if (userCreated) {
+      navigate("/");
+      reset();
+    }
   };
 
   return (
@@ -74,7 +79,8 @@ export function FormSignUp() {
                   message: "A senha deve ter no mínimo 7 dígitos",
                 },
                 pattern: {
-                  value: /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}|:"<>?,./\\[\]-]).+$/,
+                  value:
+                    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}|:"<>?,./\\[\]-]).+$/,
                   message:
                     "A senha deve ter número, letra maiúscula e caractere especial",
                 },
