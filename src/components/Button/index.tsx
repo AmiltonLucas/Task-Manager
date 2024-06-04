@@ -1,5 +1,5 @@
 import { ButtonStyle, Container } from "./styles";
-import LoadingImg from "../../assets/loading.gif";
+import loadingImg from "../../assets/loading.gif";
 
 type ButtonTypes = {
   title: string;
@@ -9,8 +9,8 @@ type ButtonTypes = {
 
 export function Button({ title, loading = false, variant = "primary" }: ButtonTypes) {
   return (
-  <Container variant={variant} disabled={loading}>
-    {loading ? <img src={LoadingImg} width={14} /> : title}
-  </Container>
-  )
+    <Container variant={variant} disabled={loading}>
+      {loading ? <img src={loadingImg} width={14} /> : title}
+    </Container>
+  );
 }

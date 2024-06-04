@@ -42,6 +42,7 @@ export const Container = styled.div`
   }
 
   .buttonChangePage {
+    font-size: 1.4rem;
     font-weight: 700;
     text-decoration: underline;
   }
@@ -67,7 +68,11 @@ export const Container = styled.div`
       }
     }
 
-    span {
+    .messageChangePage {
+      font-size: 1.6rem;
+    }
+
+    .buttonChangePage {
       font-size: 1.6rem;
     }
   }

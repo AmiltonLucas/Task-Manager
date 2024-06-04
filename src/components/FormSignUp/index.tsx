@@ -9,7 +9,7 @@ export function FormSignUp() {
   type InputTypes = {
     name: string;
     email: string;
-    Senha: string;
+    password: string;
   };
 
   const {
@@ -34,9 +34,9 @@ export function FormSignUp() {
             Nome:
             <input
               type="text"
-              placeholder="Digite seu nome"
+              placeholder="digite seu nome"
               {...register("name", {
-                required: "Campo obrigatório!",
+                required: "campo obrigatório!",
               })}
             />
           </label>
@@ -50,7 +50,7 @@ export function FormSignUp() {
               type="email"
               placeholder="example@email.com"
               {...register("email", {
-                required: "Campo obrigatório!",
+                required: "campo obrigatório!",
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                   message: "endereço de email inválido!",
@@ -66,9 +66,9 @@ export function FormSignUp() {
             Senha:
             <input
               type="password"
-              placeholder="mínimo de 7 dígitos"
-              {...register("Senha", {
-                required: "Campo obrigatório",
+              placeholder="Minimum 7 characters"
+              {...register("password", {
+                required: "campo obrigatório!",
                 minLength: {
                   value: 7,
                   message: "A senha deve ter no mínimo 7 dígitos",
@@ -81,7 +81,7 @@ export function FormSignUp() {
               })}
             />
           </label>
-          <span className="inputError">{errors.Senha?.message}</span>
+          <span className="inputError">{errors.password?.message}</span>
         </section>
 
         <Button title="Finalizar" loading={false} variant="secondary" />
