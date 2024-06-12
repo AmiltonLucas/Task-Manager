@@ -20,9 +20,7 @@ type AuthContextTypes = {
   signOut: () => void;
 };
 
-export const AuthContext = createContext<AuthContextTypes>(
-  {} as AuthContextTypes
-);
+export const AuthContext = createContext<AuthContextTypes>({} as AuthContextTypes);
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [isLoading, setIsLoading] = useState(false);
@@ -42,10 +40,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
         setUserAuthID(res.data.id);
 
-        localStorage.setItem(
-          "@task_manager:userID",
-          JSON.stringify(res.data.id)
-        );
+        localStorage.setItem("@task_manager:userID", JSON.stringify(res.data.id));
 
         return true;
       })
@@ -103,7 +98,6 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     const userID = localStorage.getItem("@task_manager:userID");
-    console.log(userID);
 
     if (userID) {
       const id = JSON.parse(userID);
@@ -120,9 +114,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{ signIn, isLoading, userAuthID, signOut, signUp }}
-    >
+    <AuthContext.Provider value={{ signIn, isLoading, userAuthID, signOut, signUp }}>
       {children}
     </AuthContext.Provider>
   );

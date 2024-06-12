@@ -1,5 +1,5 @@
-import { Container } from "./styles";
 import { Link } from "react-router-dom";
+import { Container } from "./styles";
 import logo from "../../assets/logo-rj.png";
 import { SideBar } from "../SideBar";
 import { useState } from "react";
@@ -18,11 +18,8 @@ export function Header() {
       </i>
       <div className="appLogo">
         <h1>Task Manager</h1>
-        <Link
-          to={"https://emanuelquintino.github.io/Page-WDC/"}
-          target="_blank"
-        >
-          <img src={logo} alt="logo rj rprograma jucás" />
+        <Link to={""}>
+          <img src={logo} />
         </Link>
       </div>
 

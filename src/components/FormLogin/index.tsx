@@ -67,7 +67,7 @@ export function FormLogin() {
       </form>
 
       <span className="messageChangePage">Don't have an account? </span>
-      <button className="buttonChangePage" onClick={() => navigate("/sign-up")}>
+      <button className="buttonChangePage" onClick={() => navigate("/signup")}>
         Register
       </button>
     </Container>

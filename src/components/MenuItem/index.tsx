@@ -1,12 +1,12 @@
 import { Container } from "./styles";
 
-type MenuProps = {
+type MenuTypes = {
   title: string;
   icon: string;
   onClick?: () => void;
 };
 
-export function MenuItem({ title, icon, onClick }: MenuProps) {
+export function MenuItem({ title, icon, onClick }: MenuTypes) {
   return (
     <Container onClick={onClick}>
       <i className="material-icons">{icon}</i>

@@ -22,13 +22,11 @@ export function StatsCard({
     <Container onClick={onClick} variant={variant}>
       <div>
         <h3>
-          {title} ({number && total && `${percentage && percentage.toFixed(2)}`}
-          )%
+          {title} ({number && total && `${percentage && percentage.toFixed(2)}`})%
         </h3>
         <p>{number || "-"}</p>
       </div>
       <i className="material-icons">{icon}</i>
-      <span>{title}</span>
     </Container>
   );
 }
